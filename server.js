@@ -27,6 +27,63 @@ app.post('/saveProducts', async(req, res) => {
       res.status(500).json({message: error.message})
   }
 })
+
+//get all products
+app.get('/products', async(req, res) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json(products);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({message: error.message})
+  }
+});
+
+
+// Get product by ID
+app.get('/products/:id', async(req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({message: 'Product not found'});
+    }
+    res.status(200).json(product);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({message: error.message})
+  }
+});
+
+// Delete product by ID
+app.delete('/products/:id', async(req, res) => {
+  try {
+    const product = await Product.findByIdAndDelete(req.params.id);
+    if (!product) {
+      return res.status(404).json({message: 'Product not found'});
+    }
+    res.status(200).json({message: 'Product deleted successfully'});
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({message: error.message})
+  }
+});
+
+// Update product by ID
+app.put('/products/:id', async(req, res) => {
+  try {
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    if (!product) {
+      return res.status(404).json({message: 'Product not found'});
+    }
+    res.status(200).json(product);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({message: error.message})
+  }
+});
+
+
+
 mongoose.set('strictQuery', false);
 //mysql connection 
 // var con = mysql.createConnection({

@@ -1,0 +1,40 @@
+const mongoose = require('mongoose')
+
+const supportSchema = mongoose.Schema(
+    {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            auto: true
+          },
+        name: {
+            type: String,
+            required: [true, "Please enter a product name"]
+        },
+        email: {
+            type: String,
+            required: true,
+            default: 0
+        },
+        technology: {
+            type: [String],
+            required: true,
+        },
+        timeZode: {
+            type: String,
+            required: false,
+        },
+        contact: {
+            type: String,
+            required: false,
+        },
+
+    },
+    {
+        timestamps: true
+    }
+)
+
+
+const Support = mongoose.model('Support', supportSchema,'support');
+
+module.exports = Support;
